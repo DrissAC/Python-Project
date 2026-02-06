@@ -1,6 +1,7 @@
 import requests
 import os
 from dotenv import load_dotenv
+from datetime import datetime
 
 load_dotenv()
 API_KEY_METEO = os.getenv("API_KEY_METEO")
@@ -8,18 +9,25 @@ API_KEY_METEO = os.getenv("API_KEY_METEO")
 API_KEY = API_KEY_METEO
 BASE_URL = "https://api.openweathermap.org/data/2.5/weather"
 
+
+
 def get_weather(city):
     try:
-        url = f"{BASE_URL}?q={city}&appid={API_KEY}&units=metric"
+        url = f"{BASE_URL}?q={city}&appid={API_KEY}&units=metric&lang=fr"
         response = requests.get(url)
         if response.status_code == 200:
             data = response.json()
+            sunrise = datetime.fromtimestamp(data['sys']['sunrise']).strftime("%H:%M")
+            sunset = datetime.fromtimestamp(data['sys']['sunset']).strftime("%H:%M")
             weather = {
                 "City": data["name"],
+                "Lever du soleil": sunrise,
+                "Coucher du soleil": sunset,
                 "Temperature": f"{data["main"]["temp"]}°C",
-                "Weather": data["weather"][0]["description"].title(),
-                "Humidity": f"{data["main"]["humidity"]}%",
-                "Wind Speed": f"{data['wind']['speed']} m/s"
+                "Ressenti": f"{data['main']['feels_like']}°C",
+                "Temps": data["weather"][0]["description"].title(),
+                "Humidité": f"{data["main"]["humidity"]}%",
+                "Vitesse du vent": f"{data['wind']['speed']} m/s"
             }
             return weather
         elif response.status_code == 404:
