@@ -12,6 +12,7 @@ __pycache__/
 *.txt
 *.json
 *.csv
+*.env
 # Distribution / packaging
 .Python
 build/
