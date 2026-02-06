@@ -1,9 +1,10 @@
 import random
 
 secret_number = random.randint(1, 10)
-attemps = 3
+print(f"\n--- Bienvenue au jeu 'Devine le Nombre' ---")
+attemps = int (input("Combien d'essais voulez-vous ? : "))
 
-print("Je pense à un nombre entre 1 et 10")
+print(f"Je pense à un nombre entre 1 et 10, vous avez {attemps} essais !")
 
 while attemps > 0: 
     guess = int(input("Pouvez-vous le devinez ?: "))
