@@ -29,7 +29,7 @@ class UserProfile:
         print("\n--- Profil de l'utilisateur ---")
         print(f"Nom d'utilisateur: {self.username}")
         print(f"Email: {self._email}")
-        print(f"Mot de passe: {self._password}")
+        print(f"Mot de passe: " + "*" * len(self._password) + f"")
 
 users = []
 
