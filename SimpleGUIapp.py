@@ -5,6 +5,8 @@ root.title("Simple GUI App")
 root.geometry("400x450")
 root.config(bg="#f0f0f0")
 
+is_dark_mode = False
+
 traductions = {
     "Francais": {
         "titre": "Bienvenue sur mon APP GUI",
@@ -40,6 +42,18 @@ traductions = {
     }
 }
 
+def toggle_theme():
+    global is_dark_mode
+    is_dark_mode = not is_dark_mode
+
+    bg_color = "#2d2d2d" if is_dark_mode else "#f0f0f0"
+    fg_color = "white" if is_dark_mode else "black"
+
+    root.config(bg=bg_color)
+    for label in [title_label, name_label, greeting_label]:
+        label.config(bg=bg_color, fg=fg_color)
+    
+    update_language()
 def update_language(*args):
     langue = variable.get()
     if langue in traductions:
@@ -92,7 +106,12 @@ greet_button.pack(pady=10)
 reset_button = tk.Button(root, text="Réinitialiser", font=("Arial", 12), bg="#f44336", fg="white", command=reset)
 reset_button.pack(pady=5)
 
+theme_button = tk.Button(root, text="💡", font=("Arial", 10), command=toggle_theme)
+theme_button.pack(pady=20)
+
 greeting_label = tk.Label(root, text="", font=("Arial", 12), bg="#f0f0f0")
 greeting_label.pack(pady=20)
+
+update_language()
 
 root.mainloop()
